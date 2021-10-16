@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity, Alert,
 } from 'react-native';
@@ -11,20 +11,23 @@ export default function LogInScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handlePress() {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const { user } = userCredential;
-        console.log(user.uid);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'MemoList' }],
+  const handlePress = useCallback(
+    () => {
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const { user } = userCredential;
+          console.log(user.uid);
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'MemoList' }],
+          });
+        })
+        .catch((error) => {
+          Alert.alert(error.code);
         });
-      })
-      .catch((error) => {
-        Alert.alert(error.code);
-      });
-  }
+    },
+    [email, password],
+  );
 
   return (
     <View style={styles.container}>
