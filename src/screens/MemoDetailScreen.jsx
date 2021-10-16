@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View, ScrollView, Text, StyleSheet,
 } from 'react-native';
+
 import CircleButton from '../components/CircleButton';
 
 export default function MemoDetailScreen(props) {

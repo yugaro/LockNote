@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity,
 } from 'react-native';
@@ -7,12 +7,31 @@ import SquareButton from '../components/SquareBotton';
 
 export default function SignUpScreen(props) {
   const { navigation } = props;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
         <Text style={styles.title}> Sign Up </Text>
-        <TextInput style={styles.input}> Email Address </TextInput>
-        <TextInput style={styles.input}> Password </TextInput>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={(text) => { setEmail(text); }}
+          autoCapitalize="none"
+          keyboardType="email-adress"
+          placeholder="Email Address"
+          textContentType="emailAddress"
+        />
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={(text) => { setPassword(text); }}
+          autoCapitalize="none"
+          placeholder="Password"
+          textContentType="password"
+          secureTextEntry
+        />
         <SquareButton
           label="Submit"
           onPress={() => {
@@ -37,7 +56,6 @@ export default function SignUpScreen(props) {
         </View>
       </View>
     </View>
-
   );
 }
 
