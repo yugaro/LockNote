@@ -19,6 +19,7 @@ export default function MemoDetailScreen(props) {
     const db = firebase.firestore();
     if (currentUser) {
       const ref = db.collection(`users/${currentUser.uid}/memos/`).doc(id);
+      // onSnapshot => monitor
       unsubscribe = ref.onSnapshot((doc) => {
         const data = doc.data();
         setMemo({
@@ -47,7 +48,7 @@ export default function MemoDetailScreen(props) {
       <CircleButton
         style={{ top: 60, bottom: 'auto' }}
         name="pencil"
-        onPress={() => { navigation.navigate('MemoEdit'); }}
+        onPress={() => { navigation.navigate('MemoEdit', { id: memo.id, bodyText: memo.bodyText }); }}
       />
     </View>
   );
