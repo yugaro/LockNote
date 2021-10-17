@@ -4,20 +4,35 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 import { useNavigation } from '@react-navigation/native';
+import { shape, func } from 'prop-types';
 
-export default function LogOutButton() {
+export default function LogOutButton(props) {
+  const { cleanupFuncs } = props;
   const navigation = useNavigation();
   const handlePress = () => {
-    firebase.auth().signOut()
-      .then(() => {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'LogIn' }],
-        });
-      })
-      .catch(() => {
-        Alert.alert('Fail to log out');
-      });
+    Alert.alert('Log Out', 'Are you sure you want to log out this app ?', [
+      {
+        text: 'Cancel',
+        onPress: () => {},
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          cleanupFuncs.memos();
+          cleanupFuncs.auth();
+          firebase.auth().signOut()
+            .then(() => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'MemoList' }],
+              });
+            })
+            .catch(() => {
+              Alert.alert('Fail to log out.');
+            });
+        },
+      },
+    ]);
   };
 
   return (
@@ -29,6 +44,13 @@ export default function LogOutButton() {
     </TouchableOpacity>
   );
 }
+
+LogOutButton.propTypes = {
+  cleanupFuncs: shape({
+    auth: func,
+    memos: func,
+  }).isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {

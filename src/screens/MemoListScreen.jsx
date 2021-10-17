@@ -6,9 +6,9 @@ import firebase from 'firebase';
 
 import MemoList from '../components/MemoList';
 import CircleButton from '../components/CircleButton';
-import LogOutButton from '../components/LogOutButton';
 import SquareButton from '../components/SquareBotton';
 import Loading from '../components/Loading';
+import HeaderRightButton from '../components/HeaderRightButton';
 
 export default function MemoListScreen(props) {
   const { navigation } = props;
@@ -16,37 +16,48 @@ export default function MemoListScreen(props) {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <LogOutButton />,
-    });
-  }, []);
+    setLoading(true);
 
-  useEffect(() => {
-    const { currentUser } = firebase.auth();
-    const db = firebase.firestore();
-    let unsubscribe = () => {};
-    if (currentUser) {
-      setLoading(true);
-      const ref = db.collection(`users/${currentUser.uid}/memos`).orderBy('updatedAt', 'desc');
-      // Monitor memos
-      unsubscribe = ref.onSnapshot((snapshot) => {
-        const userMemos = [];
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          userMemos.push({
-            id: doc.id,
-            bodyText: data.bodyText,
-            updatedAt: data.updatedAt.toDate(),
+    const cleanupFuncs = {
+      auth: () => {},
+      memos: () => {},
+    };
+    cleanupFuncs.auth = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const db = firebase.firestore();
+        const ref = db.collection(`users/${user.uid}/memos`).orderBy('updatedAt', 'desc');
+        cleanupFuncs.memos = ref.onSnapshot((snapshot) => {
+          const userMemos = [];
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            userMemos.push({
+              id: doc.id,
+              bodyText: data.bodyText,
+              updatedAt: data.updatedAt.toDate(),
+            });
           });
+          setMemos(userMemos);
+          setLoading(false);
+        }, () => {
+          setLoading(false);
         });
-        setMemos(userMemos);
-        setLoading(false);
-      }, () => {
-        Alert.alert('Fail to load data.');
-        setLoading(false);
-      });
-    }
-    return unsubscribe;
+        navigation.setOptions({
+          headerRight: () => (
+            <HeaderRightButton currentUser={user} cleanupFuncs={cleanupFuncs} />
+          ),
+        });
+      } else {
+        firebase.auth().signInAnonymously()
+          .catch(() => {
+            Alert.alert('Error', 'Restart your application.');
+          })
+          .then(() => { setLoading(false); });
+      }
+    });
+    return () => {
+      cleanupFuncs.auth();
+      cleanupFuncs.memos();
+    };
   }, []);
 
   if (memos.length === 0) {
@@ -101,3 +112,36 @@ const emptyStyles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+
+//   // const { currentUser } = firebase.auth();
+//   const db = firebase.firestore();
+//   let unsubscribe = () => {};
+//   if (currentUser) {
+//     setLoading(true);
+//     const ref = db.collection(`users/${currentUser.uid}/memos`).orderBy('updatedAt', 'desc');
+//     // Monitor memos
+//     unsubscribe = ref.onSnapshot((snapshot) => {
+//       const userMemos = [];
+//       snapshot.forEach((doc) => {
+//         const data = doc.data();
+//         userMemos.push({
+//           id: doc.id,
+//           bodyText: data.bodyText,
+//           updatedAt: data.updatedAt.toDate(),
+//         });
+//       });
+//       setMemos(userMemos);
+//       setLoading(false);
+//     }, () => {
+//       // console.log('aaaa');
+//       // Alert.alert('Fail to load data.');
+//       setLoading(false);
+//     });
+//   }
+//   return unsubscribe;
+// }, []);
+// useEffect(() => {
+//   navigation.setOptions({
+//     headerRight: () => <LogOutButton />,
+//   });
+// }, []);

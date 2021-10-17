@@ -28,6 +28,7 @@ export default function MemoDetailScreen(props) {
           updatedAt: data.updatedAt.toDate(),
         });
       }, () => {
+        console.log('bbbb');
         Alert.alert('Fail to load data.');
       });
     }
