@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity, Alert,
 } from 'react-native';
@@ -11,7 +11,7 @@ export default function SignUpScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handlePress = useCallback(() => {
+  const handlePress = () => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const { user } = userCredential;
@@ -25,7 +25,7 @@ export default function SignUpScreen(props) {
         console.log(error.code, error.message);
         Alert.alert(error.code);
       });
-  }, [email, password]);
+  };
   // function handlePress() {
   //   firebase.auth().createUserWithEmailAndPassword(email, password)
   //     .then((userCredential) => {

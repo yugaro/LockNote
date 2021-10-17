@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   TouchableOpacity, Text, StyleSheet, Alert,
 } from 'react-native';
@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function LogOutButton() {
   const navigation = useNavigation();
-  const handlePress = useCallback(() => {
+  const handlePress = () => {
     firebase.auth().signOut()
       .then(() => {
         navigation.reset({
@@ -18,7 +18,8 @@ export default function LogOutButton() {
       .catch(() => {
         Alert.alert('Fail to log out');
       });
-  }, []);
+  };
+
   return (
     <TouchableOpacity
       style={styles.container}

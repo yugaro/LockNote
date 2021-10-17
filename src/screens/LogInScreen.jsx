@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity, Alert,
 } from 'react-native';
@@ -23,7 +23,7 @@ export default function LogInScreen(props) {
     return unsubscribe;
   }, []);
 
-  const handlePress = useCallback(() => {
+  const handlePress = () => {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const { user } = userCredential;
@@ -36,7 +36,7 @@ export default function LogInScreen(props) {
       .catch((error) => {
         Alert.alert(error.code);
       });
-  }, [email, password]);
+  };
 
   return (
     <View style={styles.container}>

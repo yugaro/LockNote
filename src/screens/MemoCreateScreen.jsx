@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   View, StyleSheet, TextInput,
 } from 'react-native';
@@ -11,7 +11,7 @@ export default function MemoCreateScreen(props) {
   const { navigation } = props;
   const [bodyText, setBodyText] = useState('');
 
-  const handlePress = useCallback(() => {
+  const handlePress = () => {
     const { currentUser } = firebase.auth();
     const db = firebase.firestore();
     const ref = db.collection(`users/${currentUser.uid}/memos`);
@@ -26,7 +26,7 @@ export default function MemoCreateScreen(props) {
       .catch((error) => {
         console.log('Error!', error);
       });
-  });
+  };
 
   return (
     <KeyboardSafeView style={styles.containter}>
@@ -37,6 +37,7 @@ export default function MemoCreateScreen(props) {
           style={styles.input}
           onChangeText={(text) => { setBodyText(text); }}
           autoFocus
+          autoCapitalize="none"
         />
       </View>
       <CircleButton
