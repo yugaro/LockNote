@@ -41,8 +41,7 @@ export default function MemoListScreen(props) {
         });
         setMemos(userMemos);
         setLoading(false);
-      }, (error) => {
-        console.log(error);
+      }, () => {
         Alert.alert('Fail to load data.');
         setLoading(false);
       });

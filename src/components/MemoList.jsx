@@ -20,7 +20,6 @@ export default function MemoList(props) {
     if (currentUser) {
       const db = firebase.firestore();
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
-      console.log(currentUser.uid);
       Alert.alert('Delete memo', 'Are you sure you want to permanently delete this memo ?', [
         {
           text: 'Cancel',
