@@ -29,7 +29,7 @@ export default function App() {
         screenOptions={{
           headerStyle: { backgroundColor: '#467FD3' },
           headerTiteStyle: { color: '#ffffff' },
-          headerTitle: 'Memo App',
+          headerTitle: 'Lock Note',
           headerTintColor: '#ffffff',
           headerBackTitle: 'Back',
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
