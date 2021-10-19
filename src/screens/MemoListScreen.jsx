@@ -69,7 +69,7 @@ export default function MemoListScreen(props) {
       <View style={emptyStyles.container}>
         <Loading isLoading={isLoading} />
         <View style={emptyStyles.inner}>
-          <Text style={emptyStyles.title}>Let&apos;s create your first memo !</Text>
+          <Text style={emptyStyles.title}>Let&apos;s create your first note !</Text>
           <SquareButton
             style={emptyStyles.button}
             label="create"
