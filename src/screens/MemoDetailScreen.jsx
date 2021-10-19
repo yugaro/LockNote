@@ -28,7 +28,6 @@ export default function MemoDetailScreen(props) {
           updatedAt: data.updatedAt.toDate(),
         });
       }, () => {
-        console.log('bbbb');
         Alert.alert('Fail to load data.');
       });
     }
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   memoHeader: {
-    backgroundColor: '#467FD3',
+    backgroundColor: '#95C4D2',
     height: 96,
     justifyContent: 'center',
     alignItems: 'flex-start',

@@ -27,7 +27,7 @@ export default function App() {
       <Stack.Navigator
         initialRouteName="MemoList"
         screenOptions={{
-          headerStyle: { backgroundColor: '#467FD3' },
+          headerStyle: { backgroundColor: '#95C4D2' },
           headerTiteStyle: { color: '#ffffff' },
           headerTitle: 'Lock Note',
           headerTintColor: '#ffffff',

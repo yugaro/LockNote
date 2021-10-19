@@ -129,6 +129,6 @@ const styles = StyleSheet.create({
   footterLink: {
     fontSize: 14,
     lineHeight: 24,
-    color: '#467FD3',
+    color: '#95C4D2',
   },
 });

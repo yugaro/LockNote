@@ -19,17 +19,6 @@ export default function LogInScreen(props) {
     navigation.setOptions({
       headerRight: () => <CancelLogIn />,
     });
-    // const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-    //   if (user) {
-    //     navigation.reset({
-    //       index: 0,
-    //       routes: [{ name: 'MemoList' }],
-    //     });
-    //   } else {
-    //     setLoading(false);
-    //   }
-    // });
-    // return unsubscribe;
   }, []);
 
   const handlePress = () => {
@@ -131,6 +120,6 @@ const styles = StyleSheet.create({
   footterLink: {
     fontSize: 14,
     lineHeight: 24,
-    color: '#467FD3',
+    color: '#95C4D2',
   },
 });

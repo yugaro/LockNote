@@ -9,6 +9,7 @@ import CircleButton from '../components/CircleButton';
 import SquareButton from '../components/SquareBotton';
 import Loading from '../components/Loading';
 import HeaderRightButton from '../components/HeaderRightButton';
+import HeaderLeftButton from '../components/HeaderLeftButton';
 
 export default function MemoListScreen(props) {
   const { navigation } = props;
@@ -44,6 +45,9 @@ export default function MemoListScreen(props) {
         navigation.setOptions({
           headerRight: () => (
             <HeaderRightButton currentUser={user} cleanupFuncs={cleanupFuncs} />
+          ),
+          headerLeft: () => (
+            <HeaderLeftButton currentUser={user} />
           ),
         });
       } else {
@@ -112,36 +116,3 @@ const emptyStyles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
-
-//   // const { currentUser } = firebase.auth();
-//   const db = firebase.firestore();
-//   let unsubscribe = () => {};
-//   if (currentUser) {
-//     setLoading(true);
-//     const ref = db.collection(`users/${currentUser.uid}/memos`).orderBy('updatedAt', 'desc');
-//     // Monitor memos
-//     unsubscribe = ref.onSnapshot((snapshot) => {
-//       const userMemos = [];
-//       snapshot.forEach((doc) => {
-//         const data = doc.data();
-//         userMemos.push({
-//           id: doc.id,
-//           bodyText: data.bodyText,
-//           updatedAt: data.updatedAt.toDate(),
-//         });
-//       });
-//       setMemos(userMemos);
-//       setLoading(false);
-//     }, () => {
-//       // console.log('aaaa');
-//       // Alert.alert('Fail to load data.');
-//       setLoading(false);
-//     });
-//   }
-//   return unsubscribe;
-// }, []);
-// useEffect(() => {
-//   navigation.setOptions({
-//     headerRight: () => <LogOutButton />,
-//   });
-// }, []);
